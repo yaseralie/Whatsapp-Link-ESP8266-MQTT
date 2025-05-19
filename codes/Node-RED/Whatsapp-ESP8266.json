@@ -1,0 +1,446 @@
+[
+    {
+        "id": "296a10caafc03760",
+        "type": "tab",
+        "label": "Whatsapp-ESP8266",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9bb3f76ab01a75d2",
+        "type": "mqtt out",
+        "z": "296a10caafc03760",
+        "name": "",
+        "topic": "ESP_Sub",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "27d08554d80811b6",
+        "x": 260,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "562dc85355db42c0",
+        "type": "mqtt in",
+        "z": "296a10caafc03760",
+        "name": "",
+        "topic": "ESP_Pub",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "27d08554d80811b6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 500,
+        "wires": [
+            [
+                "5743d849f2bfe929"
+            ]
+        ]
+    },
+    {
+        "id": "d5a6cbffc3511e1a",
+        "type": "inject",
+        "z": "296a10caafc03760",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test",
+        "payloadType": "str",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "eb5ebd62a991428b"
+            ]
+        ]
+    },
+    {
+        "id": "cd470d374d87576b",
+        "type": "comment",
+        "z": "296a10caafc03760",
+        "name": "Connect to Whatsapp Web",
+        "info": "",
+        "x": 150,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "eb5ebd62a991428b",
+        "type": "admin",
+        "z": "296a10caafc03760",
+        "name": "WA Admin",
+        "whatsappLink": "29215a3fe7271ee9",
+        "x": 310,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a618070b38c9d281",
+        "type": "comment",
+        "z": "296a10caafc03760",
+        "name": "Receive command",
+        "info": "",
+        "x": 130,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "61e0da9a49e674fe",
+        "type": "chats-in",
+        "z": "296a10caafc03760",
+        "name": "Chats In",
+        "whatsappLink": "29215a3fe7271ee9",
+        "x": 100,
+        "y": 280,
+        "wires": [
+            [
+                "5ed01ab412d84980"
+            ]
+        ]
+    },
+    {
+        "id": "5ed01ab412d84980",
+        "type": "switch",
+        "z": "296a10caafc03760",
+        "name": "Check From Number",
+        "property": "from",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "628123456789",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "628776655443",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 300,
+        "y": 280,
+        "wires": [
+            [
+                "5eeb5066720dd406"
+            ],
+            [
+                "5eeb5066720dd406"
+            ]
+        ]
+    },
+    {
+        "id": "5eeb5066720dd406",
+        "type": "switch",
+        "z": "296a10caafc03760",
+        "name": "Check Status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Status",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "d2258af6302bf40b",
+                "ca239e1ce943eaef"
+            ],
+            [
+                "ca239e1ce943eaef",
+                "d4963ca7aeb3c0ab"
+            ]
+        ]
+    },
+    {
+        "id": "d2258af6302bf40b",
+        "type": "mqtt out",
+        "z": "296a10caafc03760",
+        "name": "Send Status",
+        "topic": "ESP_Sub",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "27d08554d80811b6",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ca239e1ce943eaef",
+        "type": "change",
+        "z": "296a10caafc03760",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "from_no",
+                "pt": "global",
+                "to": "from",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3efe8c17cfe3372",
+        "type": "comment",
+        "z": "296a10caafc03760",
+        "name": "Receive MQTT and send to From Number",
+        "info": "",
+        "x": 200,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "54607b7cee75a040",
+        "type": "chats-out",
+        "z": "296a10caafc03760",
+        "name": "Chats Out",
+        "whatsappLink": "29215a3fe7271ee9",
+        "number": "",
+        "x": 740,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "5743d849f2bfe929",
+        "type": "change",
+        "z": "296a10caafc03760",
+        "name": "Get msg.toNumber",
+        "rules": [
+            {
+                "t": "set",
+                "p": "toNumber",
+                "pt": "msg",
+                "to": "from_no",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 500,
+        "wires": [
+            [
+                "1bfea2d1c6170134"
+            ]
+        ]
+    },
+    {
+        "id": "1bfea2d1c6170134",
+        "type": "function",
+        "z": "296a10caafc03760",
+        "name": "Status",
+        "func": "var data = msg.payload;\nvar json = JSON.parse(data);\nvar lamp1 = json.lamp1\nvar lamp2 = json.lamp2\nvar lamp3 = json.lamp3\nvar temp = json.temperature\nvar humi = json.humidity\n\nif (lamp1 == true){\n    lamp1 = \"ON\"\n}\nelse {\n    lamp1 = \"OFF\"\n}\n\nif (lamp2 == true){\n    lamp2 = \"ON\"\n}\nelse {\n    lamp2 = \"OFF\"\n}\n\nif (lamp3 == true){\n    lamp3 = \"ON\"\n}\nelse {\n    lamp3 = \"OFF\"\n}\n\nmsg.payload = \"*Current Status:*\\nLamp1 = \" + lamp1 + \"\\n\" + \n\"Lamp2 = \" + lamp2 + \"\\n\" + \n\"Lamp3 = \" + lamp3 + \"\\n\" + \n\"Temperature = \" + temp + \"°C\\n\" +\n\"Humidity = \" + humi + \"%\"\n\nmsg.toNumber = parseInt(msg.toNumber)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 500,
+        "wires": [
+            [
+                "54607b7cee75a040",
+                "6ee8d3dca82ff43e"
+            ]
+        ]
+    },
+    {
+        "id": "d4963ca7aeb3c0ab",
+        "type": "function",
+        "z": "296a10caafc03760",
+        "name": "Split",
+        "func": "let text = msg.payload\nconst myArray = text.split(\" \");\nlet device = myArray[0];\nlet trigger = myArray[1];\n\nmsg.payload = {\"device\":device,\"trigger\":trigger};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "9bb3f76ab01a75d2"
+            ]
+        ]
+    },
+    {
+        "id": "ce8ebe2fda7f4903",
+        "type": "comment",
+        "z": "296a10caafc03760",
+        "name": "Send Status",
+        "info": "",
+        "x": 730,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "91af376003903442",
+        "type": "comment",
+        "z": "296a10caafc03760",
+        "name": "Send Trigger",
+        "info": "",
+        "x": 270,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6ee8d3dca82ff43e",
+        "type": "debug",
+        "z": "296a10caafc03760",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ca22a0fcb87a352b",
+        "type": "inject",
+        "z": "296a10caafc03760",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "restart",
+        "payloadType": "str",
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "eb5ebd62a991428b"
+            ]
+        ]
+    },
+    {
+        "id": "e808a712a09dbc70",
+        "type": "inject",
+        "z": "296a10caafc03760",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "destroy",
+        "payloadType": "str",
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "eb5ebd62a991428b"
+            ]
+        ]
+    },
+    {
+        "id": "27d08554d80811b6",
+        "type": "mqtt-broker",
+        "name": "VPS Yaser",
+        "broker": "103.227.130.104",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "29215a3fe7271ee9",
+        "type": "whatsappLink",
+        "cName": "whatsapp-web",
+        "name": "Web"
+    }
+]
